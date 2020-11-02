@@ -9,9 +9,25 @@ app.get("/", function(req, res){
 
     https.get(url, function(response){
         console.log(response.statusCode);
-    })
 
-    res.send("Server is up and running...")
+        response.on("data", function(data){
+            const weatherData = JSON.parse(data);
+            
+            const temp = weatherData.main.temp;
+            const weatherDescription = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
+            const imgURL = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+
+            console.log(icon);
+
+            console.log(weatherDescription);
+            console.log(temp);
+
+            res.write("<h1>La temperatura en Sabadell es de: " + temp + " grados</h1>")
+            res.write("<p>El tiempo será " + weatherDescription + "</p>");
+            res.write("<img src="+imgURL+"></img>")
+        });
+    });
 });
 
 app.listen(3000, function(){
