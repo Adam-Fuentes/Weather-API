@@ -25,7 +25,8 @@ app.get("/", function(req, res){
 
             res.write("<h1>La temperatura en Sabadell es de: " + temp + " grados</h1>")
             res.write("<p>El tiempo será " + weatherDescription + "</p>");
-            res.write("<img src="+imgURL+"></img>")
+            res.write("<img src="+imgURL+"></img>");
+            res.send();//si no se pone esto no acaba el proceso
         });
     });
 });
